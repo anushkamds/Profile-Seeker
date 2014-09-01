@@ -4,6 +4,7 @@
  */
 package ajaxdemo;
 
+import ProfileMaker.Profile.Profile;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -51,12 +52,16 @@ public class ActionServlet extends HttpServlet {
         String detailJSON = "";
         PrintWriter out = response.getWriter();
         ProfileDetailGenerator profile = new ProfileDetailGenerator();
+        Profile pr=new Profile(request.getParameter("user").toString());
+//        Profile pr=new Profile("thilina premasiri");
+        
+        System.out.println(".......................................");
         profile.detailFiller();
 
         imgeJSON = "<div class=\"profile\">\n"
-                + "                                <img src=\"" + profile.getImageURL() + "\" alt=\"profile\">                                \n"
+                + "                                <img src=\"" + pr.pic_url + "\" alt=\"profile\">                                \n"
                 + "                            </div>\n"
-                + "                            <h1><span>" + profile.getName() + " </span><span>" + profile.getTitle() + "</span></h1>";
+                + "                            <h1><span>" + pr.name + " </span><span>" + pr.title + "</span></h1>";
         if (request.getParameter("user").toString().equals("")) {
             imgeJSON = "<h1><span>Ha! </span><span>tried a blank search didn't you? try again</span></h1>";
         }
