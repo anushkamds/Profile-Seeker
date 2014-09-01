@@ -19,6 +19,7 @@
         <link rel="stylesheet" type="text/css" href="css/component.css" />
         <link rel="stylesheet" type="text/css" href="css/spinner.css" />
         <script src="js/modernizr.custom.js"></script>
+        <script src="js/canvasjs.min.js"></script>
         <script src="http://code.jquery.com/jquery-latest.js"></script>
         <script>
             $(document).ready(function() {
