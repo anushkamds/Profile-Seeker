@@ -1,0 +1,59 @@
+/* 
+    Document   : spinner
+    Created on : Sep 1, 2014, 12:18:56 AM
+    Author     : Anushka
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+    background-color: #47a3da;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -40px;
+    margin-left: -40px;
+    -webkit-animation: rotateplane 1.2s infinite ease-in-out;
+    animation: rotateplane 1.2s infinite ease-in-out;
+    z-index: 1000;
+    display: none;
+}
+.spinner-background{
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: 999;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+@-webkit-keyframes rotateplane {
+    0% {
+    -webkit-transform: perspective(120px)
+}
+50% {
+    -webkit-transform: perspective(120px) rotateY(180deg)
+}
+100% {
+    -webkit-transform: perspective(120px) rotateY(180deg) rotateX(180deg)
+}
+}
+@keyframes rotateplane {
+    0% {
+    transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+    -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+}
+50% {
+    transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+    -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+    background-color: #2a6182;
+}
+100% {
+    transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+    -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+}
+}
