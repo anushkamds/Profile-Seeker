@@ -23,7 +23,7 @@ public class ProfileDetailGenerator {
         title = "Web Desinger";
         projects = "<p>Scenario archetype complementary responsive script pixel sidebar sitemap keep it simple. Complementary visuals footer CSS from alan cooper delightful. Photoshop iconography simplicity user experience affordance narrative ascenders contour. Slab serif interstitial skeuomorphism illustrator design by committee simplicity alan cooper eye tracking. Typography contrast mental model typesetting affordance narrative from CSS. Retina simplicity design by committee typography oblique.</p>\n"
                 + "<p>Delightful ascenders contrast prototype. Ligature jakob nielsen user measure. Ligature contrast glyph rule of thirds composition interstitial dribbble. Mental model typography urbanized balance. Resolution rounded corners IDEO constraints dribbble persona. Portfolio sketch baseline 66-character line. Usability testing mental model simplicity aspect ratio pencil type. Usable sans-serif visualization leading prägnanz baseline pencil fireworks clarity omnigraffle.</p>\n"
-                + "<div id=\"chartContainer\" style=\"height: 500px; width: 500px;\"></div>"
+                + "<div id=\"chartContainer\" style=\"height: 500px; width: 500px;margin: 0 auto\"></div>"
                 + "<script> $(function(){\n"
                 + "     var chart = new CanvasJS.Chart(\"chartContainer\",\n"
                 + "    {\n"
