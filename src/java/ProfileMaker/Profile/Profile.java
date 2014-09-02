@@ -11,10 +11,10 @@ import java.util.ArrayList;
 
 public class Profile {
 
-    public String name, title, summary, pic_url;
-    public ArrayList experienceList = new ArrayList<Experience>();
-    public ArrayList projectsList = new ArrayList<Project>();
-    public ArrayList publicationList = new ArrayList<Publication>();
+    public String name, title, summary, pic_url,education;
+    public ArrayList<Experience> experienceList = new ArrayList<Experience>();
+    public ArrayList<Project> projectsList = new ArrayList<Project>();
+    public ArrayList<Publication> publicationList = new ArrayList<Publication>();
 
     public Profile(String searchName) {
 
@@ -80,10 +80,10 @@ public class Profile {
     }
 
     public void addExperience(Experience experience) {
-        projectsList.add(experience);
+        experienceList.add(experience);
     }
 
     public void addPublication(Publication publication) {
-        projectsList.add(publication);
+        publicationList.add(publication);
     }
 }

@@ -52,9 +52,9 @@ public class ActionServlet extends HttpServlet {
         String detailJSON = "";
         PrintWriter out = response.getWriter();
         ProfileDetailGenerator profile = new ProfileDetailGenerator();
-        Profile pr=new Profile(request.getParameter("user").toString());
+        Profile pr = new Profile(request.getParameter("user").toString());
 //        Profile pr=new Profile("thilina premasiri");
-        
+
         System.out.println(".......................................");
         profile.detailFiller();
 
@@ -66,17 +66,40 @@ public class ActionServlet extends HttpServlet {
             imgeJSON = "<h1><span>Ha! </span><span>tried a blank search didn't you? try again</span></h1>";
         }
 
-        if (profile.getPersonalDetails() != null) {
+        if (pr.name != null) {
             detailJSON = "<section>\n"
-                    + "<h2>Personal Details</h2>" + profile.getPersonalDetails() + "</section>";
+                    + "<h2>Personal Details</h2>" + "<p>" + pr.name + "</p><br><h3>Education</h3><p>";
+            if (pr.title != null) {
+                detailJSON += pr.title + "<br>";
+            }
+            if (pr.education != null) {
+                detailJSON += pr.education.replace("\n", "<br>");
+            }
+            detailJSON += "</p></section>";
         }
-        
-        if (profile.getProjects() != null) {
-            detailJSON = detailJSON+"<section>\n"
-                    + "<h2>Project Details</h2>" + profile.getProjects() + "</section>";
+//        publication listing
+        if (pr.publicationList != null) {
+            detailJSON = detailJSON + "<section>\n"
+                    + "<h2>Publications</h2><p>";
+            for (int i = 0; i < pr.publicationList.size(); i++) {
+                detailJSON += "<b>" + pr.publicationList.get(i).name + "</b><br>";
+                detailJSON += pr.publicationList.get(i).authors + "<br><br>";
+                detailJSON += pr.publicationList.get(i).summary + "<br><br>";
+            }
+            detailJSON += "</p></section>";
+        }
+//        projects listing
+        if (pr.projectsList != null) {
+            detailJSON = detailJSON + "<section>\n"
+                    + "<h2>Projects</h2><p>";
+            for (int i = 0; i < pr.projectsList.size(); i++) {
+                detailJSON += "<b>" + pr.projectsList.get(i).name + "</b><br>";
+                detailJSON += pr.projectsList.get(i).summary + "<br><br>";
+            }
+            detailJSON += "</p></section>";
         }
         if (profile.getPublications() != null) {
-            detailJSON = detailJSON+"<section>\n"
+            detailJSON = detailJSON + "<section>\n"
                     + "<h2>Publication Details</h2>" + profile.getPublications() + "</section>";
         }
 //                + "                            <h2>Web Development</h2>\n"

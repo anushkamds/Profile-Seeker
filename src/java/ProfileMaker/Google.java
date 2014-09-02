@@ -31,7 +31,7 @@ public class Google {
         while (elements.size() > i) {
             link = "https://" + elements.get(i).text();
             i++;
-//            System.out.println(link);
+            System.out.println(link);
             if (!link.contains("/dir/")) {
                 break;
             }
@@ -43,7 +43,7 @@ public class Google {
         if (link.contains("/dir/")) {
             return "";
         }
-        if (link.contains("lk.linkedin.com/pub/")) {
+        if (link.contains("lk.linkedin.com/")) {
             return link;
         }
         return "";

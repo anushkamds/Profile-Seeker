@@ -11,12 +11,16 @@ import ProfileMaker.Profile.Profile;
 import ProfileMaker.Profile.Publication;
 
 public class LinkedInExtractor {
+    
+    public static void  main(String[] args) {
+        
+    }
 
     public Profile Extract1(String searchName, Profile profile) {
 
         ProfileMaker.Google g = new ProfileMaker.Google();
         String link = g.FindOnLinkedIn(searchName);
-        System.out.println(link);
+        System.out.println(link+"--------------------------");
         if (link == "") {
             profile.setName("not found");
             return profile;
@@ -51,16 +55,29 @@ public class LinkedInExtractor {
         System.out.println(titleP.text());
         title = titleP.text();
         profile.title = titleP.text();
+        
+        //        Education
+        Elements eduTr = doc != null ? doc.select("dd.summary-education > ul > li") : null;
+        if (eduTr!=null) {
+            profile.education="";
+        }
+        for (int i = 0; i < eduTr.size(); i++) {
+            profile.education+=eduTr.get(i).text()+"\n";
+        }
+        
 //        publications
         Publication pb;
         Elements pub = doc != null ? doc.select("ul[class=publications documents] > li >h3 ") : null;
+        Elements pubSummary = doc != null ? doc.select("ul[class=publications documents] > li >div ") : null;
         publications = new String[pub.size()];
         for (int i = 0; i < pub.size(); i++) {
             System.out.println(pub.get(i).text());
             publications[i] = pub.get(i).text();
-
+            
             pb = new Publication();
             pb.name = pub.get(i).text();
+//            pb.summary=pub.get(i).select("div.summary").text();
+            pb.summary=pubSummary.get(i).text();
             profile.publicationList.add(pb);
         }
         return profile;
@@ -102,6 +119,15 @@ public class LinkedInExtractor {
         System.out.println(titleP.text());
         title = titleP.text();
         profile.title = titleP.text();
+        
+//        Education
+        Elements eduTr = doc != null ? doc.select("tr[id=overview-summary-education] > td> ol > li") : null;
+        if (eduTr!=null) {
+            profile.education="";
+        }
+        for (int i = 0; i < eduTr.size(); i++) {
+            profile.education+=eduTr.get(i).text()+"\n";
+        }
 //        publications
         Publication pb;
         Elements pub = doc != null ? doc.select("ul[class=publications documents] > li >h3 ") : null;
