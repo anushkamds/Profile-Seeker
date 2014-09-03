@@ -38,6 +38,17 @@
                         <div class="intro-content">                            
                         </div>
                         <div class="overlay"></div>
+                          <div class="footer" style="position: relative; top: 75%">
+
+                            <p>Data Collection Sites</p>
+
+                            <img class="footer-images" src="img/github.png">
+
+                            <img class="footer-images" src="img/linkedIn.png">
+
+                            <img class="footer-images" src="img/googlescholar.png">
+
+                        </div>
                     </div>
                 </div>
                 <!-- /intro -->

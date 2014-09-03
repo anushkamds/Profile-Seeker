@@ -16,10 +16,12 @@ public class GoogleScholarExtractor {
 
         Google g = new Google();
         String link = g.FindOnGoogleScholar(searchName);
-        if (link == "") {
+        if (link.equals("")) {
+            if(profile.publicationList.isEmpty()){
+                profile.publicationList = null;
+            }
             return profile;
         }
-        profile.publicationList=new ArrayList<Publication>();
         Document doc = null;
         String picUrl, name, title;
         String[] publications;

@@ -8,7 +8,9 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import ProfileMaker.Profile.Profile;
+import ProfileMaker.Profile.Project;
 import ProfileMaker.Profile.Publication;
+import java.util.ArrayList;
 
 public class LinkedInExtractor {
 
@@ -75,10 +77,27 @@ public class LinkedInExtractor {
 
             pb = new Publication();
             pb.name = pub.get(i).text();
-//            pb.summary=pub.get(i).select("div.summary").text();
-            pb.summary = pubSummary.get(i).text();
+            if (pubSummary != null && i < pubSummary.size()) {
+                pb.summary = pubSummary.get(i).text();
+            }
             profile.publicationList.add(pb);
         }
+
+        Project project;
+        Elements pro = doc != null ? doc.select("ul[class=projects documents] > li >h3 ") : null;
+        Elements proSummary = doc != null ? doc.select("ul[class=projects documents] > li >div >p") : null;
+        System.out.println("ksdjhfkjsf------" + proSummary.size());
+        if (pro != null) {
+            for (int i = 0; i < pro.size(); i++) {
+                project = new Project();
+                project.name = pro.get(i).text();
+                if (i < proSummary.size()) {
+                    project.summary = proSummary.get(i).text();
+                }
+                profile.projectsList.add(project);
+            }
+        }
+
         return profile;
     }
 
