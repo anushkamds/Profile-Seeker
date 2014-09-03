@@ -21,37 +21,7 @@
         <script src="js/modernizr.custom.js"></script>
         <script src="js/canvasjs.min.js"></script>
         <script src="http://code.jquery.com/jquery-latest.js"></script>
-        <script>
-            $(document).ready(function() {
-                $("#loading").hide();
-                $('#submit').click(function(event) {
-                    $(".spinner-background").slideDown("slow");
-                    $(".spinner").slideDown("slow");
-                    var username = $('#user').val();
-                    $.ajax({
-                        url: 'actionservlet',
-                        data: {user: username},
-                        timeout:30000,
-                        beforeSend: function() {
-                        },
-                        success: function(responseText) {
-                            $('.intro-content').html(responseText.profile);
-                            $('.page-inner').html(responseText.details);
-
-                        },
-                        error: function() {
-                            // will fire when timeout is reached
-                        },
-                        complete: function() {
-                            $(".spinner-background").hide();
-                            $(".spinner").hide();
-//                            alert("finished");
-                        }
-                    });
-                });
-
-            });
-        </script>
+        <script src="js/submitFunction.js"></script>
     </head>
     <body>
         <div class="container">

@@ -9,7 +9,7 @@ package ProfileMaker.Profile;
  * @author Thilina
  */
 public class Publication {
-    public String name,summary,year,authors,link;
+    public String name="",summary="",year="",authors="",link="";
     public int citations;
 
     public String getName() {
