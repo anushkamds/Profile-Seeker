@@ -9,7 +9,7 @@ package ProfileMaker.Profile;
  * @author Thilina
  */
 public class Project {
-    public String name,summary,partners,technology;
+    public String name="",summary="",partners="",technology="";
 
     public String getName() {
         return name;

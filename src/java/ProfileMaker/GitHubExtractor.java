@@ -6,31 +6,35 @@ import org.json.JSONObject;
 import utils.NetworkManager;
 import ProfileMaker.Profile.Profile;
 import ProfileMaker.Profile.Project;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class GitHubExtractor {
+
     private String token;
     private NetworkManager networkManager;
+
     public GitHubExtractor(String Accesstoken) {
         this.token = Accesstoken;
-        networkManager=new NetworkManager();
+        networkManager = new NetworkManager();
     }
 
-    public static void  main(String[] args) {
+    public static void main(String[] args) {
 //        new GitHubExtractor("69e07dde89a8a0a6713f810cfd4c461f04f47e85").GetInfo("https://api.github.com/users/wadsashika");
-        new GitHubExtractor("69e07dde89a8a0a6713f810cfd4c461f04f47e85").Extract("thilina premasiri",null);
+        new GitHubExtractor("69e07dde89a8a0a6713f810cfd4c461f04f47e85").Extract("thilina premasiri", null);
     }
-    public void Extract(String name,Profile profile){
-        System.out.println("\nSearching "+name+" on GitHub");
-        name=name.replaceAll(" ","%20");
-        String url="https://api.github.com/search/users?q="+name+"&order=desc&access_token="+token;
-        String result=networkManager.Get(url);
+
+    public void Extract(String name, Profile profile) {
+        System.out.println("\nSearching " + name + " on GitHub");
+        name = name.replaceAll(" ", "%20");
+        String url = "https://api.github.com/search/users?q=" + name + "&order=desc&access_token=" + token;
+        String result = networkManager.Get(url);
 //        System.out.println(result);
         try {
-            JSONObject json=new JSONObject(result);
-            if (json.getInt("total_count")!=0) {
-                GetInfo(json.getJSONArray("items").getJSONObject(0).getString("url"),profile);
-            }
-            else {
+            JSONObject json = new JSONObject(result);
+            if (json.getInt("total_count") != 0) {
+                GetInfo(json.getJSONArray("items").getJSONObject(0).getString("url"), profile);
+            } else {
                 System.out.println("No GitHub profiles found");
             }
         } catch (JSONException e) {
@@ -38,32 +42,32 @@ public class GitHubExtractor {
         }
     }
 
-    public String GetInfo(String profileUrl,Profile profile)  {
-        String urlString=profileUrl+"/repos?access_token="+token;
-        String info=networkManager.Get(urlString);
-            ShowInfo(info,profile);
+    public String GetInfo(String profileUrl, Profile profile) {
+        String urlString = profileUrl + "/repos?access_token=" + token;
+        String info = networkManager.Get(urlString);
+        ShowInfo(info, profile);
 
 //        System.out.println();
         return info;
     }
 
-    public void ShowInfo(String jsonString,Profile profile){
+    public void ShowInfo(String jsonString, Profile profile) {
         try {
 //            JSONObject json=new JSONObject(jsonString);
-            JSONArray ary=new JSONArray(jsonString);
+            JSONArray ary = new JSONArray(jsonString);
             JSONObject json;
             System.out.println("==========GitHub Projects=========");
             Project proj;
             for (int i = 0; i < ary.length(); i++) {
-                json= ary.getJSONObject(i);
+                json = ary.getJSONObject(i);
                 System.out.println(json.get("name") + "-----------");
-                System.out.println("Description : "+json.get("description"));
-                System.out.println("Technology : "+json.get("language")+"\n");
-                
-                proj=new Project();
-                proj.name=json.get("name").toString();
-                proj.summary=json.get("description").toString();
-                proj.technology=json.get("language").toString();
+                System.out.println("Description : " + json.get("description"));
+                System.out.println("Technology : " + json.get("language") + "\n");
+
+                proj = new Project();
+                proj.name = GetNotNull("name",json);
+                proj.summary = GetNotNull("description",json);
+                proj.technology = GetNotNull("language",json);
                 profile.projectsList.add(proj);
             }
 
@@ -72,4 +76,14 @@ public class GitHubExtractor {
         }
     }
 
+    private String GetNotNull(String key, JSONObject json) {
+        try {
+            if (json.get(key).toString() != null) {
+                return " "+json.get(key).toString();
+            }
+        } catch (JSONException ex) {
+            Logger.getLogger(GitHubExtractor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "";
     }
+}

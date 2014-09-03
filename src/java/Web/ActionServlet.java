@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ajaxdemo;
+package Web;
 
 import ProfileMaker.Profile.Profile;
 import java.io.IOException;
@@ -52,9 +52,8 @@ public class ActionServlet extends HttpServlet {
         String detailJSON = "";
         PrintWriter out = response.getWriter();
         Profile pr = new Profile(request.getParameter("user").toString());
-
+        
         System.out.println(".......................................");
-
         imgeJSON = "<div class=\"profile\">\n"
                 + "                                <img src=\"" + pr.pic_url + "\" alt=\"profile\">                                \n"
                 + "                            </div>\n"

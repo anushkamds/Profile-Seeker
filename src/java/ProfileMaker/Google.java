@@ -19,6 +19,7 @@ public class Google {
         try {
             Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("proxyHost", 1234));
             doc = Jsoup.connect("https://www.google.lk/search?q=" + name.replace(' ', '+') + "+linkedin").userAgent("Chrome").timeout(0).get();
+//            doc = Jsoup.connect("https://www.google.lk/search?q=linkedin%3A" + name.replace(' ', '+') ).userAgent("Chrome").timeout(0).get();
 
 
         } catch (IOException e) {

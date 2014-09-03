@@ -11,13 +11,13 @@ import java.util.ArrayList;
 
 public class Profile {
 
-    public String name, title, summary, pic_url,education;
+    public String name="", title="", summary="", pic_url="",education="";
     public ArrayList<Experience> experienceList = new ArrayList<Experience>();
     public ArrayList<Project> projectsList = new ArrayList<Project>();
     public ArrayList<Publication> publicationList = new ArrayList<Publication>();
 
     public Profile(String searchName) {
-
+        
         LinkedInExtractor linkedIn = new LinkedInExtractor();
         GoogleScholarExtractor gscholar = new GoogleScholarExtractor();
         GitHubExtractor github = new GitHubExtractor("69e07dde89a8a0a6713f810cfd4c461f04f47e85");
@@ -25,6 +25,9 @@ public class Profile {
         linkedIn.Extract1(searchName, this);
         gscholar.Extract(searchName, this);
         github.Extract(searchName, this);
+        if (pic_url.equalsIgnoreCase("")) {
+            pic_url="http://ryonaitis.files.wordpress.com/2012/03/images.jpg";
+        }
     }
 
     public String getName() {

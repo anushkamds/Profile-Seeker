@@ -9,7 +9,7 @@ package ProfileMaker.Profile;
  * @author Thilina
  */
 public class Experience {
-    public String name,summary;
+    public String name="",summary="";
 
     public Experience(String name, String summary) {
         this.name = name;
