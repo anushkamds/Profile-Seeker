@@ -48,20 +48,17 @@ public class ActionServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ObjectClass nn = new ObjectClass();
-        String imgeJSON = null;
+        String imgeJSON = "";
         String detailJSON = "";
         PrintWriter out = response.getWriter();
-        ProfileDetailGenerator profile = new ProfileDetailGenerator();
         Profile pr = new Profile(request.getParameter("user").toString());
-//        Profile pr=new Profile("thilina premasiri");
 
         System.out.println(".......................................");
-        profile.detailFiller();
 
         imgeJSON = "<div class=\"profile\">\n"
                 + "                                <img src=\"" + pr.pic_url + "\" alt=\"profile\">                                \n"
                 + "                            </div>\n"
-                + "                            <h1><span>" + pr.name + " </span><span>" + pr.title + "</span></h1>";
+                + "                            <h1 class=\"nameNtitle\"><span>" + pr.name + " </span><span>" + pr.title + "</span></h1>";
         if (request.getParameter("user").toString().equals("")) {
             imgeJSON = "<h1><span>Ha! </span><span>tried a blank search didn't you? try again</span></h1>";
         }
@@ -98,10 +95,7 @@ public class ActionServlet extends HttpServlet {
             }
             detailJSON += "</p></section>";
         }
-        if (profile.getPublications() != null) {
-            detailJSON = detailJSON + "<section>\n"
-                    + "<h2>Publication Details</h2>" + profile.getPublications() + "</section>";
-        }
+        
 //                + "                            <h2>Web Development</h2>\n"
 //                + "                            <p>Scenario archetype complementary responsive script pixel sidebar sitemap keep it simple. Complementary visuals footer CSS from alan cooper delightful. Photoshop iconography simplicity user experience affordance narrative ascenders contour. Slab serif interstitial skeuomorphism illustrator design by committee simplicity alan cooper eye tracking. Typography contrast mental model typesetting affordance narrative from CSS. Retina simplicity design by committee typography oblique.</p>\n"
 //                + "                            <p>Delightful ascenders contrast prototype. Ligature jakob nielsen user measure. Ligature contrast glyph rule of thirds composition interstitial dribbble. Mental model typography urbanized balance. Resolution rounded corners IDEO constraints dribbble persona. Portfolio sketch baseline 66-character line. Usability testing mental model simplicity aspect ratio pencil type. Usable sans-serif visualization leading prägnanz baseline pencil fireworks clarity omnigraffle.</p>\n"
