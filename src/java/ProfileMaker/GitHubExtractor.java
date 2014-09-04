@@ -29,7 +29,6 @@ public class GitHubExtractor {
         name = name.replaceAll(" ", "%20");
         String url = "https://api.github.com/search/users?q=" + name + "&order=desc&access_token=" + token;
         String result = networkManager.Get(url);
-//        System.out.println(result);
         try {
             JSONObject json = new JSONObject(result);
             if (json.getInt("total_count") != 0) {
