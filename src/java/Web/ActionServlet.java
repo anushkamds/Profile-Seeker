@@ -25,9 +25,8 @@ public class ActionServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Processes requests for both HTTP
-     * <code>GET</code> and
-     * <code>POST</code> methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -36,8 +35,7 @@ public class ActionServlet extends HttpServlet {
      */
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
-     * Handles the HTTP
-     * <code>GET</code> method.
+     * Handles the HTTP <code>GET</code> method.
      *
      * @param request servlet request
      * @param response servlet response
@@ -51,8 +49,8 @@ public class ActionServlet extends HttpServlet {
         String imgeJSON = "";
         String detailJSON = "";
         PrintWriter out = response.getWriter();
-        Profile pr = new Profile(request.getParameter("user").toString());
-        
+        Profile pr = new Profile(request.getParameter("user"));
+
         System.out.println(".......................................");
         imgeJSON = "<div class=\"profile\">\n"
                 + "                                <img src=\"" + pr.pic_url + "\" alt=\"profile\">                                \n"
@@ -69,32 +67,39 @@ public class ActionServlet extends HttpServlet {
                 detailJSON += pr.title + "<br>";
             }
             if (pr.education != null) {
-                detailJSON += "<h3>Education</h3><br>"+pr.education.replace("\n", "<br>");
+                detailJSON += "<h3>Education</h3><p>" + pr.education.replace("\n", "<br>");
             }
             detailJSON += "</p></section>";
         }
 //        publication listing
         if (pr.publicationList != null) {
-            detailJSON = detailJSON + "<section>\n"
+            detailJSON = detailJSON + "<hr><section>\n"
                     + "<h2>Publications</h2><p>";
             for (int i = 0; i < pr.publicationList.size(); i++) {
                 detailJSON += "<b>" + pr.publicationList.get(i).name + "</b><br>";
-                detailJSON += pr.publicationList.get(i).authors + "<br><br>";
-                detailJSON += pr.publicationList.get(i).summary + "<br><br>";
+                if (!pr.publicationList.get(i).authors.isEmpty()) {
+                    detailJSON += pr.publicationList.get(i).authors + "<br><br>";
+                }
+                if (!pr.publicationList.get(i).summary.isEmpty()) {
+                    detailJSON += pr.publicationList.get(i).summary + "<br>";
+                }
+                detailJSON += "<br>";
             }
             detailJSON += "</p></section>";
         }
 //        projects listing
-        if (pr.projectsList != null) {
-            detailJSON = detailJSON + "<section>\n"
+        if (!pr.projectsList.isEmpty()) {
+            detailJSON = detailJSON + "<hr><section>\n"
                     + "<h2>Projects</h2><p>";
             for (int i = 0; i < pr.projectsList.size(); i++) {
                 detailJSON += "<b>" + pr.projectsList.get(i).name + "</b><br>";
-                detailJSON += pr.projectsList.get(i).summary + "<br><br>";
+                if (!pr.projectsList.get(i).summary.isEmpty()) {
+                    detailJSON += pr.projectsList.get(i).summary + "<br>";
+                }
+                detailJSON += "<br>";
             }
             detailJSON += "</p></section>";
         }
-
         
         response.setContentType("application/json");
         try {

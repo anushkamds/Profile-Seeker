@@ -51,11 +51,12 @@ public class Google {
     }
 
     public String FindOnGoogleScholar(String name) {
+        System.out.println("Searching on Google Scholar");
         String link = "";
         Document doc = null;
         try {
             Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("proxyHost", 1234));
-            doc = Jsoup.connect("https://www.google.lk/search?q=" + name.replace(' ', '+') + "+google+scholar").userAgent("Chrome").timeout(0).get();
+            doc = Jsoup.connect("https://www.google.lk/search?q= \"" + name + "\" +google+scholar").userAgent("Chrome").timeout(0).get();
 
 
         } catch (IOException e) {

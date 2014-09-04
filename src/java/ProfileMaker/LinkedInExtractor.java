@@ -8,7 +8,9 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import ProfileMaker.Profile.Profile;
+import ProfileMaker.Profile.Project;
 import ProfileMaker.Profile.Publication;
+import java.util.ArrayList;
 
 public class LinkedInExtractor {
 
@@ -20,7 +22,7 @@ public class LinkedInExtractor {
         ProfileMaker.Google g = new ProfileMaker.Google();
         String link = g.FindOnLinkedIn(searchName);
         System.out.println(link + "--------------------------");
-        if (link == "") {
+        if (link.equals("")) {
             profile.setName("not found");
             return profile;
         }
@@ -34,13 +36,16 @@ public class LinkedInExtractor {
         }
 //      profile picture
         Element profile_picture = doc != null ? doc.select("div[id=profile-picture] > img").first() : null;
-//        System.out.println(profile_picture);
-//        System.out.println(profile_picture.attr("src"));
-        if (profile_picture == null) {
-            Extract2(searchName, profile);
-            return profile;
+        System.out.println(profile_picture);
+        if (profile_picture != null) {
+            profile.pic_url = profile_picture.attr("src");
+        } else {
+            profile_picture = doc != null ? doc.select("div.profile-picture> a > img").first() : null;
+            if (profile_picture != null) {
+                profile.pic_url = profile_picture.attr("src");
+            }
         }
-        profile.pic_url = profile_picture.attr("src");
+
         System.out.println("pic url " + profile.pic_url);
 //        name
         Element nameDiv = doc != null ? doc.select("span.full-name").first() : null;
@@ -75,9 +80,40 @@ public class LinkedInExtractor {
 
             pb = new Publication();
             pb.name = pub.get(i).text();
-//            pb.summary=pub.get(i).select("div.summary").text();
-            pb.summary = pubSummary.get(i).text();
+            if (pubSummary != null && i < pubSummary.size()) {
+                pb.summary = pubSummary.get(i).text();
+            }
             profile.publicationList.add(pb);
+        }
+//projects type 1 documents
+        Project project;
+        Elements pro = doc != null ? doc.select("ul[class=projects documents] > li >h3 ") : null;
+        Elements proSummary = doc != null ? doc.select("ul[class=projects documents] > li >div >p") : null;
+        System.out.println("ksdjhfkjsf------" + proSummary.size());
+        if (pro != null) {
+            for (int i = 0; i < pro.size(); i++) {
+                project = new Project();
+                project.name = pro.get(i).text();
+                if (i < proSummary.size()) {
+                    project.summary = proSummary.get(i).text();
+                }
+                profile.projectsList.add(project);
+            }
+        }
+//projects type 2 documents
+        Project project2;
+        Elements pro2 = doc != null ? doc.select("div[id=background-projects] >div[class=editable-item section-item] > div[id^=project] >hgroup>h4") : null;
+        Elements proSummary2 = doc != null ? doc.select("div[id=background-projects] >div[class=editable-item section-item] > div[id^=project] > p") : null;
+        System.out.println("ksdjhfkjsf------" + pro2.size()+"--------"+proSummary2.size());
+        if (pro != null) {
+            for (int i = 0; i < pro2.size(); i++) {
+                project2 = new Project();
+                project2.name = pro2.get(i).text();
+                if (i < proSummary2.size()) {
+                    project2.summary = proSummary2.get(i).text();
+                }
+                profile.projectsList.add(project2);
+            }
         }
         return profile;
     }

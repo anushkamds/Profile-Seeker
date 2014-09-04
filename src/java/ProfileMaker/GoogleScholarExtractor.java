@@ -16,10 +16,12 @@ public class GoogleScholarExtractor {
 
         Google g = new Google();
         String link = g.FindOnGoogleScholar(searchName);
-        if (link == "") {
+        if (link.equals("")) {
+            if (profile.publicationList.isEmpty()) {
+                profile.publicationList = null;
+            }
             return profile;
         }
-        profile.publicationList=new ArrayList<Publication>();
         Document doc = null;
         String picUrl, name, title;
         String[] publications;
@@ -29,7 +31,14 @@ public class GoogleScholarExtractor {
             e.printStackTrace();
         }
 
-
+// profile pic
+        if (profile.pic_url.equals("")) {
+            Element pic = doc != null ? doc.select("div[id=gsc_prf_pu]> a> img").first() : null;
+            if (pic != null) {
+                String ulr_suffix = pic.attr("src");
+                profile.pic_url = "http://scholar.google.com/" + ulr_suffix;
+            }
+        }
 //        publications
         System.out.println("=========== Research Papers ===========");
         Elements pub = doc != null ? doc.select("tr.gsc_a_tr") : null;
@@ -48,7 +57,7 @@ public class GoogleScholarExtractor {
             pb.name = pub.get(i).select("td>a.gsc_a_at").text();
             pb.authors = pub.get(i).select("div.gs_gray").get(0).text();
             pb.link = "http://scholar.google.com/" + pub.get(i).select("a.gsc_a_at").get(0).attr("href");
-            pb.summary=GetSummary(pb.link);
+            pb.summary = GetSummary(pb.link);
             try {
                 pb.citations = Integer.parseInt(("0" + pub.get(i).select("td.gsc_a_c").get(0).text()).trim());
             } catch (NumberFormatException e) {
@@ -66,9 +75,9 @@ public class GoogleScholarExtractor {
         try {
             doc = Jsoup.connect(link).timeout(0).get();
             Element sumDiv = doc != null ? doc.select("div[id=gsc_descr]").first() : null;
-            if (sumDiv!=null) {
-                summary=sumDiv.text();
-                System.out.println("Summary ::::::::::::::::::"+sumDiv.text());
+            if (sumDiv != null) {
+                summary = sumDiv.text();
+                System.out.println("Summary ::::::::::::::::::" + sumDiv.text());
             }
         } catch (IOException e) {
             e.printStackTrace();

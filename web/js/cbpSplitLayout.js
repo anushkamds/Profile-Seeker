@@ -43,6 +43,7 @@
         rightSide.querySelector('div.intro-content').addEventListener(eventtype, function(ev) {
             $('.input-box').hide();
             $('.nameNtitle').hide();
+            $('.footer').hide();
             reset();
             classie.add(splitlayout, 'open-right');
         });
@@ -63,6 +64,7 @@
             classie.add(splitlayout, 'close-' + dir);
             $('.input-box').show();
             $('.nameNtitle').show();
+            $('.footer').show();
             page.addEventListener(transEndEventName, onEndTransFn);
         };
 
