@@ -49,7 +49,7 @@ public class ActionServlet extends HttpServlet {
         String imgeJSON = "";
         String detailJSON = "";
         PrintWriter out = response.getWriter();
-        Profile pr = new Profile(request.getParameter("user").toString());
+        Profile pr = new Profile(request.getParameter("user"));
 
         System.out.println(".......................................");
         imgeJSON = "<div class=\"profile\">\n"
